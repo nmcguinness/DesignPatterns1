@@ -6,6 +6,20 @@ public class Accumulator {
     private double average = 0;
     private double sum = 0;
     private int count = 0;
+    private double stdDev = 0;
+    private double sumStdDev = 0;
+
+    //new toString, call in update, getter (stddev), update reset
+
+    protected void updateStdDev(String current)
+    {
+        //substract length - average
+        double diff = current.length() - average;
+        //square it and add to sumStdDev
+        sumStdDev += diff*diff;
+        //divide count and sqrt
+        stdDev = Math.sqrt(sumStdDev/count);
+    }
 
     //constructor
     public Accumulator()
