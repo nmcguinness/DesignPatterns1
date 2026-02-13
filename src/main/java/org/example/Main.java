@@ -18,5 +18,7 @@ public class Main {
 
     public void run(){
          List<String> dataList = new ArrayList<>(List.of("Ana","Ben","Ciara","Dave","Erica"));
+
+         //write the code to output the average string length
     }
 }
