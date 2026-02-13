@@ -16,11 +16,15 @@ public class Main {
     }
 
     public void run(){
-         List<String> dataList = new ArrayList<>(List.of("Ana","Ben","Ciara","Dave","Erica"));
+         List<String> dataList1 = new ArrayList<>(List.of("Ana","Ben","Cia","Dav","Era"));
+         Accumulator myStringAccumulator1 = new Accumulator();
+         getStatistics(dataList1, myStringAccumulator1);
+         System.out.println(myStringAccumulator1);
 
-         Accumulator myStringAccumulator = new Accumulator();
-         getStatistics(dataList, myStringAccumulator);
-         System.out.println(myStringAccumulator);
+        List<String> dataList2 = new ArrayList<>(List.of("ad","fghgfhgfh","sdfsd","asddfgdfgfdgfdggsd","sdffsd"));
+        Accumulator myStringAccumulator2 = new Accumulator();
+        getStatistics(dataList2, myStringAccumulator2);
+        System.out.println(myStringAccumulator2);
     }
 
 //    public double getAverage(List<String> data)  {

@@ -1,6 +1,14 @@
 package org.example;
 
+import java.text.DecimalFormat;
+
 public class Accumulator {
+
+    //class variables
+    private static DecimalFormat df = new DecimalFormat("###.###");
+      //Accumulator.df.format()...
+
+    //instance variables
     private double min = Double.MAX_VALUE;
     private double max = Double.MIN_VALUE;
     private double average = 0;
@@ -17,14 +25,14 @@ public class Accumulator {
 
     @Override
     public String toString() {
+
         return "Accumulator{" +
                 "min=" + min +
                 ", max=" + max +
                 ", average=" + average +
                 ", sum=" + sum +
                 ", count=" + count +
-                ", stdDev=" + stdDev +
-                ", sumStdDev=" + sumStdDev +
+                ", stdDev=" + Accumulator.df.format(stdDev) +
                 '}';
     }
 
