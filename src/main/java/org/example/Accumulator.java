@@ -63,6 +63,7 @@ public class Accumulator {
 
     protected void updateAverage(String current)
     {
+        count++;
         sum +=current.length();
         average = sum/count;
     }
