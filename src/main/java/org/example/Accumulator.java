@@ -3,9 +3,42 @@ package org.example;
 public class Accumulator {
     private double min = Double.MAX_VALUE;
     private double max = Double.MIN_VALUE;
-    private double average;
-    private double sum;
-    private int count;
+    private double average = 0;
+    private double sum = 0;
+    private int count = 0;
+
+    //constructor
+    public Accumulator()
+    {
+    }
+
+    //update
+
+    //reset
+
+    //toString
+
+    //getters only
+    public double getMin() {
+        return min;
+    }
+
+    public double getMax() {
+        return max;
+    }
+
+    public double getAverage() {
+        return average;
+    }
+
+    public double getSum() {
+        return sum;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
     public void updateAverage(String current)
     {
         sum +=current.length();
