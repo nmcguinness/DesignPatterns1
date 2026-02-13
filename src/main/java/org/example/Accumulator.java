@@ -49,6 +49,7 @@ public class Accumulator {
     //constructor
     public Accumulator()
     {
+
     }
 
     //update
