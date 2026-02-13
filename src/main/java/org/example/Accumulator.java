@@ -13,10 +13,32 @@ public class Accumulator {
     }
 
     //update
-
+    public void update(String data){
+        if(data == null || data.length() == 0)
+            return;
+        updateMin(data);
+        updateMax(data);
+        updateAverage(data);
+    }
     //reset
-
+    public void reset(){
+        this.min = Double.MAX_VALUE;
+        this.max = Double.MIN_VALUE;
+        this.average = 0;
+        this.count = 0;
+        this.sum = 0;
+    }
     //toString
+    @Override
+    public String toString() {
+        return "Accumulator{" +
+                "min=" + min +
+                ", max=" + max +
+                ", average=" + average +
+                ", sum=" + sum +
+                ", count=" + count +
+                '}';
+    }
 
     //getters only
     public double getMin() {
@@ -39,19 +61,19 @@ public class Accumulator {
         return count;
     }
 
-    public void updateAverage(String current)
+    protected void updateAverage(String current)
     {
         sum +=current.length();
         average = sum/count;
     }
 
-    public void updateMin(String current){
+    protected void updateMin(String current){
         double length = current.length();
         if(length < min){
             min = length;
         }
     }
-    public void updateMax(String current){
+    protected void updateMax(String current){
         double length = current.length();
         if(length > max){
             max = length;
