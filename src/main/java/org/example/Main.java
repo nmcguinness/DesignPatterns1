@@ -35,4 +35,8 @@ public class Main {
         }
         return lengthSum/data.size();
     }
+
+    public void getStatistics(List<String> data, Accumulator accumulator){
+
+    }
 }
