@@ -11,6 +11,23 @@ public class Accumulator {
 
     //new toString, call in update, getter (stddev), update reset
 
+    public double getStdDev() {
+        return stdDev;
+    }
+
+    @Override
+    public String toString() {
+        return "Accumulator{" +
+                "min=" + min +
+                ", max=" + max +
+                ", average=" + average +
+                ", sum=" + sum +
+                ", count=" + count +
+                ", stdDev=" + stdDev +
+                ", sumStdDev=" + sumStdDev +
+                '}';
+    }
+
     protected void updateStdDev(String current)
     {
         //substract length - average
@@ -30,9 +47,11 @@ public class Accumulator {
     public void update(String data){
         if(data == null || data.length() == 0)
             return;
+
         updateMin(data);
         updateMax(data);
         updateAverage(data);
+        updateStdDev(data);
     }
     //reset
     public void reset(){
@@ -41,17 +60,8 @@ public class Accumulator {
         this.average = 0;
         this.count = 0;
         this.sum = 0;
-    }
-    //toString
-    @Override
-    public String toString() {
-        return "Accumulator{" +
-                "min=" + min +
-                ", max=" + max +
-                ", average=" + average +
-                ", sum=" + sum +
-                ", count=" + count +
-                '}';
+        this.sumStdDev = 0;
+        this.stdDev = 0;
     }
 
     //getters only
