@@ -17,7 +17,10 @@ public class Main {
 
     public void run(){
          List<String> dataList = new ArrayList<>(List.of("Ana","Ben","Ciara","Dave","Erica"));
-         //write the code to output the average string length
+
+         Accumulator myStringAccumulator = new Accumulator();
+         getStatistics(dataList, myStringAccumulator);
+         System.out.println(myStringAccumulator);
     }
 
 //    public double getAverage(List<String> data)  {
@@ -37,6 +40,7 @@ public class Main {
     }
 
     public void getStatistics(List<String> data, Accumulator accumulator){
-
+        for(String s : data)
+            accumulator.update(s);
     }
 }
