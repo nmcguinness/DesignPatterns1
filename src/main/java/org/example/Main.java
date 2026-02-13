@@ -16,11 +16,14 @@ public class Main {
     }
 
     public void run(){
+
+        //make first list with NO variety in string length
          List<String> dataList1 = new ArrayList<>(List.of("Ana","Ben","Cia","Dav","Era"));
          Accumulator myStringAccumulator1 = new Accumulator();
          getStatistics(dataList1, myStringAccumulator1);
          System.out.println(myStringAccumulator1);
 
+         //make second to demonstrate difference in average and std dev
         List<String> dataList2 = new ArrayList<>(List.of("ad","fghgfhgfh","sdfsd","asddfgdfgfdgfdggsd","sdffsd"));
         Accumulator myStringAccumulator2 = new Accumulator();
         getStatistics(dataList2, myStringAccumulator2);
