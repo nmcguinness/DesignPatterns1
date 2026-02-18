@@ -8,7 +8,7 @@ public class GenericAccumulator {
     private double mean, sum;
     private int count;
 
-    public GenericAccumulator() {}
+    public GenericAccumulator() { reset();} //reset the memory you're allocated
     public double getMin() {return min;}
     public double getMax() {return max;}
     public double getMean() {return mean;}
@@ -24,6 +24,6 @@ public class GenericAccumulator {
         //mean
         count++;
         sum += measure;
-        mean /=count;
+        mean = sum / count;
     }
 }
