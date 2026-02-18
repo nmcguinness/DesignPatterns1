@@ -1,4 +1,4 @@
-package org.example;
+package org.example.incidents;
 
 /// <summary>
 /// Represents a named zone/location within an industrial facility where incidents can occur.

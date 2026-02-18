@@ -1,4 +1,4 @@
-package org.example;
+package org.example.incidents;
 
 /// <summary>
 /// The type/category of an industrial incident recorded in an <see cref="IncidentReport"/>.
