@@ -1,6 +1,7 @@
 package org.example;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class GenericAccumulator {
     private double min = Double.POSITIVE_INFINITY;
@@ -15,7 +16,11 @@ public class GenericAccumulator {
 
     public void reset() {min = max = mean = sum = 0; count = 0;}
 
-    public <T> void update(T value, Function<T, Double> measurer){
+    public <T> void update(T value, Function<T, Double> measurer, Predicate<T> filter){
+
+        if(filter.test(value) == false)
+            return;
+
         double measure = measurer.apply(value).doubleValue();
         //min
         if(measure < min) min = measure;

@@ -1,8 +1,10 @@
 package org.example;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class Main {
 
@@ -61,29 +63,28 @@ public class Main {
 
         // Next step for class:
         // - Use a generic Accumulator<IncidentReport> with a measure function, e.g. IncidentReport::getDurationSeconds
-        GenericAccumulator accumulator = new GenericAccumulator();
-        IncidentReport r = new IncidentReport("IR-001", t + 0,    420, 3, IncidentType.SPILL,            ZoneType.CHEM_STORE,        "Small solvent spill; cleaned with kit");
-        accumulator.update(r, (IncidentReport report) -> Double.valueOf(report.getSeverity()));
-        System.out.println(accumulator.getMin());
-        System.out.println(accumulator.getMax());
-        System.out.println(accumulator.getMean());
 
-        // - Add a Predicate<IncidentReport> filter to discard invalid records (blank id / negative duration / drills, etc.)
-    }
+        //try list processor
+        GenericAccumulator genAccEvents = accumulateList(events,
+                (IncidentReport report) -> Double.valueOf(report.getSeverity()),
+                (IncidentReport report) -> report.getZoneType() == ZoneType.CHEM_STORE);
+        System.out.println(genAccEvents.getMean());
+
+        //create a list of 12 integers (make some 0 and negative) and apply the accumulateList to these integers
+        LinkedList<Integer> nums = new LinkedList<>(List.of(2,4,5,-6,7,8,-1,2,0,5,9,0));
+        GenericAccumulator genAccNums = accumulateList(nums,
+                (Integer n) -> Double.valueOf(n),
+                (Integer n) -> n > 0);
+        System.out.println(genAccNums.getMean());
+      }
 
     public <T> GenericAccumulator accumulateList(List<T> list,
-                                                                Function<T, Double> measurer){
+                      Function<T, Double> measurer, Predicate<T> filter){
         GenericAccumulator accumulator = new GenericAccumulator();
         for(T obj : list)
-            accumulator.update(obj, measurer);
+            accumulator.update(obj, measurer, filter);
         return accumulator;
     }
-
-
-
-
-
-
 
     /// <summary>
     /// Demonstrates the basic accumulator idea using two lists of strings.
