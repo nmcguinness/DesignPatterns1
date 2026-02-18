@@ -4,25 +4,35 @@ import java.text.DecimalFormat;
 
 public class Accumulator {
 
-    //class variables
+    /// <summary>
+    /// Shared formatter used to present numeric values (e.g., standard deviation) with a small number of decimals.
+    /// </summary>
+    /// <see cref="DecimalFormat"/>
     private static DecimalFormat df = new DecimalFormat("###.###");
-      //Accumulator.df.format()...
+    // Accumulator.df.format(...) can be used anywhere in this class.
 
-    //instance variables
-    private double min = Double.MAX_VALUE;
-    private double max = Double.MIN_VALUE;
-    private double average = 0;
-    private double sum = 0;
-    private int count = 0;
-    private double stdDev = 0;
-    private double sumStdDev = 0;
+    // Instance variables (state tracked as we update the accumulator)
 
-    //new toString, call in update, getter (stddev), update reset
+    private double min = Double.MAX_VALUE;   // smallest string length seen so far
+    private double max = Double.MIN_VALUE;   // largest string length seen so far (NOTE: Double.MIN_VALUE is smallest positive number)
+    private double average = 0;              // running average length
+    private double sum = 0;                  // total of all string lengths so far
+    private int count = 0;                   // number of strings processed
+    private double stdDev = 0;               // running standard deviation of string lengths
+    private double sumStdDev = 0;            // running sum of squared diffs (used to compute std dev)
 
+    /// <summary>
+    /// Gets the current standard deviation for the accumulated string lengths.
+    /// </summary>
+    /// <returns>The current standard deviation value.</returns>
     public double getStdDev() {
         return stdDev;
     }
 
+    /// <summary>
+    /// Converts the current accumulator state to a readable string for debugging/printing.
+    /// </summary>
+    /// <returns>A string containing the tracked statistics.</returns>
     @Override
     public String toString() {
 
@@ -36,34 +46,53 @@ public class Accumulator {
                 '}';
     }
 
-    protected void updateStdDev(String current)
-    {
-        //substract length - average
+    /// <summary>
+    /// Updates the standard deviation based on the current string and the current running average.
+    /// </summary>
+    /// <param name="current">The current string being processed.</param>
+    protected void updateStdDev(String current) {
+
+        // Compute difference between this string's length and the current running average
         double diff = current.length() - average;
-        //square it and add to sumStdDev
-        sumStdDev += diff*diff;
-        //divide count and sqrt
-        stdDev = Math.sqrt(sumStdDev/count);
+
+        // Add squared difference to the running total of squared diffs
+        sumStdDev += diff * diff;
+
+        // Standard deviation = sqrt( (sum of squared diffs) / count )
+        // Note: this uses the current average and an incremental sum of squared diffs.
+        stdDev = Math.sqrt(sumStdDev / count);
     }
 
-    //constructor
-    public Accumulator()
-    {
-
+    /// <summary>
+    /// Creates a new accumulator with default initial state.
+    /// </summary>
+    public Accumulator() {
+        // Defaults are already set in field initialisers.
     }
 
-    //update
-    public void update(String data){
-        if(data == null || data.length() == 0)
+    /// <summary>
+    /// Updates the accumulator with one string.
+    /// The accumulator records statistics based on the string's length.
+    /// </summary>
+    /// <param name="data">The string to include in the statistics.</param>
+    public void update(String data) {
+
+        // Defensive coding: ignore null or empty strings
+        if (data == null || data.length() == 0)
             return;
 
+        // Update each part of the tracked state
         updateMin(data);
         updateMax(data);
         updateAverage(data);
         updateStdDev(data);
     }
-    //reset
-    public void reset(){
+
+    /// <summary>
+    /// Resets the accumulator back to its initial state.
+    /// </summary>
+    public void reset() {
+
         this.min = Double.MAX_VALUE;
         this.max = Double.MIN_VALUE;
         this.average = 0;
@@ -73,45 +102,86 @@ public class Accumulator {
         this.stdDev = 0;
     }
 
-    //getters only
+    /// <summary>
+    /// Gets the minimum string length observed so far.
+    /// </summary>
+    /// <returns>The smallest observed string length.</returns>
     public double getMin() {
         return min;
     }
 
+    /// <summary>
+    /// Gets the maximum string length observed so far.
+    /// </summary>
+    /// <returns>The largest observed string length.</returns>
     public double getMax() {
         return max;
     }
 
+    /// <summary>
+    /// Gets the running average string length.
+    /// </summary>
+    /// <returns>The current average string length.</returns>
     public double getAverage() {
         return average;
     }
 
+    /// <summary>
+    /// Gets the sum of all string lengths processed so far.
+    /// </summary>
+    /// <returns>The total length sum.</returns>
     public double getSum() {
         return sum;
     }
 
+    /// <summary>
+    /// Gets the number of strings processed so far.
+    /// </summary>
+    /// <returns>The count of processed strings.</returns>
     public int getCount() {
         return count;
     }
 
-    protected void updateAverage(String current)
-    {
+    /// <summary>
+    /// Updates the running average by incrementing the count, adding the current length,
+    /// and recomputing average as sum / count.
+    /// </summary>
+    /// <param name="current">The current string being processed.</param>
+    protected void updateAverage(String current) {
+
+        // Increase sample count
         count++;
-        sum +=current.length();
-        average = sum/count;
+
+        // Add this string's length to the running sum
+        sum += current.length();
+
+        // Recompute average
+        average = sum / count;
     }
 
-    protected void updateMin(String current){
+    /// <summary>
+    /// Updates the tracked minimum length if the current string is shorter than the current minimum.
+    /// </summary>
+    /// <param name="current">The current string being processed.</param>
+    protected void updateMin(String current) {
+
         double length = current.length();
-        if(length < min){
+
+        if (length < min) {
             min = length;
         }
     }
-    protected void updateMax(String current){
+
+    /// <summary>
+    /// Updates the tracked maximum length if the current string is longer than the current maximum.
+    /// </summary>
+    /// <param name="current">The current string being processed.</param>
+    protected void updateMax(String current) {
+
         double length = current.length();
-        if(length > max){
+
+        if (length > max) {
             max = length;
         }
     }
-
 }
