@@ -15,7 +15,7 @@ public class Accumulator {
 
     private double min = Double.MAX_VALUE;   // smallest string length seen so far
     private double max = Double.MIN_VALUE;   // largest string length seen so far (NOTE: Double.MIN_VALUE is smallest positive number)
-    private double average = 0;              // running average length
+    private double mean = 0;              // running average length
     private double sum = 0;                  // total of all string lengths so far
     private int count = 0;                   // number of strings processed
     private double stdDev = 0;               // running standard deviation of string lengths
@@ -39,7 +39,7 @@ public class Accumulator {
         return "Accumulator{" +
                 "min=" + min +
                 ", max=" + max +
-                ", average=" + average +
+                ", average=" + mean +
                 ", sum=" + sum +
                 ", count=" + count +
                 ", stdDev=" + Accumulator.df.format(stdDev) +
@@ -53,7 +53,7 @@ public class Accumulator {
     protected void updateStdDev(String current) {
 
         // Compute difference between this string's length and the current running average
-        double diff = current.length() - average;
+        double diff = current.length() - mean;
 
         // Add squared difference to the running total of squared diffs
         sumStdDev += diff * diff;
@@ -84,7 +84,7 @@ public class Accumulator {
         // Update each part of the tracked state
         updateMin(data);
         updateMax(data);
-        updateAverage(data);
+        updateMean(data);
         updateStdDev(data);
     }
 
@@ -95,7 +95,7 @@ public class Accumulator {
 
         this.min = Double.MAX_VALUE;
         this.max = Double.MIN_VALUE;
-        this.average = 0;
+        this.mean = 0;
         this.count = 0;
         this.sum = 0;
         this.sumStdDev = 0;
@@ -122,8 +122,8 @@ public class Accumulator {
     /// Gets the running average string length.
     /// </summary>
     /// <returns>The current average string length.</returns>
-    public double getAverage() {
-        return average;
+    public double getMean() {
+        return mean;
     }
 
     /// <summary>
@@ -144,10 +144,10 @@ public class Accumulator {
 
     /// <summary>
     /// Updates the running average by incrementing the count, adding the current length,
-    /// and recomputing average as sum / count.
+    /// and recomputing mean as sum / count.
     /// </summary>
     /// <param name="current">The current string being processed.</param>
-    protected void updateAverage(String current) {
+    protected void updateMean(String current) {
 
         // Increase sample count
         count++;
@@ -155,8 +155,8 @@ public class Accumulator {
         // Add this string's length to the running sum
         sum += current.length();
 
-        // Recompute average
-        average = sum / count;
+        // Recompute mean
+        mean = sum / count;
     }
 
     /// <summary>
@@ -177,9 +177,7 @@ public class Accumulator {
     /// </summary>
     /// <param name="current">The current string being processed.</param>
     protected void updateMax(String current) {
-
         double length = current.length();
-
         if (length > max) {
             max = length;
         }
